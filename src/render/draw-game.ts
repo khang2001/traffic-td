@@ -7,8 +7,8 @@ import type { GameEngine } from '../engine/engine';
 const TAU = Math.PI * 2;
 
 const COLORS = {
-  background: '#09090b',
-  tile: '#131316',
+  ground: '#121215',
+  grid: 'rgba(255, 255, 255, 0.09)',
   path: '#2c2c35',
   pathEdge: '#34343c',
   spawn: '#3f3f46',
@@ -25,23 +25,31 @@ export function drawGame(g: CanvasRenderingContext2D, engine: GameEngine): void 
   const width = map.cols * s;
   const height = map.rows * s;
 
-  g.fillStyle = COLORS.background;
+  // board: plain ground with a continuous road; no tile grid during normal play
+  g.fillStyle = COLORS.ground;
   g.fillRect(0, 0, width, height);
-
-  // board
-  for (let row = 0; row < map.rows; row++) {
-    for (let col = 0; col < map.cols; col++) {
-      const onPath = map.pathKeys.has(tileKey({ col, row }));
-      g.fillStyle = onPath ? COLORS.path : COLORS.tile;
-      g.fillRect(col * s + 1, row * s + 1, s - 2, s - 2);
-    }
-  }
+  g.fillStyle = COLORS.path;
+  for (const t of map.pathTiles) g.fillRect(t.col * s, t.row * s, s, s);
   const first = map.pathTiles[0];
   const last = map.pathTiles[map.pathTiles.length - 1];
   g.fillStyle = COLORS.spawn;
-  g.fillRect(first.col * s + 1, first.row * s + 1, s - 2, s - 2);
+  g.fillRect(first.col * s, first.row * s, s, s);
   g.fillStyle = COLORS.base;
-  g.fillRect(last.col * s + 1, last.row * s + 1, s - 2, s - 2);
+  g.fillRect(last.col * s, last.row * s, s, s);
+
+  // build grid: shown only while placing a tower, on tiles you can build on
+  if (engine.placing) {
+    g.save();
+    g.strokeStyle = COLORS.grid;
+    g.lineWidth = 1;
+    for (let row = 0; row < map.rows; row++) {
+      for (let col = 0; col < map.cols; col++) {
+        if (map.pathKeys.has(tileKey({ col, row }))) continue;
+        g.strokeRect(col * s + 1.5, row * s + 1.5, s - 3, s - 3);
+      }
+    }
+    g.restore();
+  }
 
   // path center line
   g.save();

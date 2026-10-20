@@ -1,7 +1,22 @@
 # Dev diary
 
 Newest first. Each entry: intent, what was built, decisions (with rejected alternatives), problems, next.
-Planning entries 0.0.0–0.0.5 live in the plan doc's "Changelog & Dev Diary" tab.
+Planning entries 0.0.0–0.0.5 live in the "Shapes Tower Defense Dev Diary" doc.
+
+## 2026-10-19 — Grid only while placing; docs split (0.7.1)
+
+**Intent:** keep the board clean during play so circles and towers read at a glance, and show the tile grid only when it helps: while choosing where to build. Separately, keep the plan focused on decisions and keep this history in its own doc.
+
+**Built:**
+- `render/draw-game.ts`: the board is plain ground with a continuous road (no tile gaps). While a tower is being placed, a faint outline appears on every buildable tile; path tiles never get one. Placing ends (placed, Esc, right-click) and the grid disappears.
+- Docs: the plan doc and the dev diary are now two separate docs. Every code block in the plan was replaced with tables, a class diagram and a screenshot; the code lives here in the repo.
+
+**Decisions:**
+- Grid outlines only on buildable tiles. Rejected: a full-board grid while placing, because lines across the road suggest you can build there.
+- Road drawn edge to edge so it reads as one path instead of a row of squares.
+- No new config values: the grid color is cosmetic and stays in the renderer with the other UI colors.
+
+**Next:** hand playtest; tune wave 9 and waves 18–20.
 
 ## 2026-10-19 — First playable prototype (0.7.0)
 

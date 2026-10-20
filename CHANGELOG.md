@@ -4,6 +4,7 @@ Versioning: `0.<milestone>.<patch>` until the first full release. Every entry st
 
 | Date | Version | Milestone | Change | Intent |
 | --- | --- | --- | --- | --- |
+| 2026-10-19 | 0.7.1 | 8 | Tile grid hidden during play; shown only on buildable tiles while placing a tower. Plan and diary split into two docs; code removed from the plan | Keep the board readable while playing; keep the plan about decisions, not code |
 | 2026-10-19 | 0.7.0 | 1–7 | First playable prototype: engine, states, 3 towers, 3 enemies, 20 waves, bottom dashboard, HUD, end screens, 24 tests; playtest tuning (starting gold 200, Rapid damage 4, hp growth 1.10) | Turn the plan into something playable and confirm the core loop is fun before polishing |
 | 2026-10-19 | 0.0.5 | Planning | All tunable numbers moved into `config.ts` | Rebalance or restyle the game by editing one file |
 | 2026-10-19 | 0.0.4 | Planning | Bottom dashboard for buy / upgrade / sell | Keep every tower transaction in one fixed place under the map |
